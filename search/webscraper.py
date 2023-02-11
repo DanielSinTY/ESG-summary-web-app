@@ -2,6 +2,7 @@ from selenium import webdriver
 # from bs4 import BeautifulSoup
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
 import chromedriver_autoinstaller
 
@@ -11,7 +12,7 @@ class WebpageScraper():
         chromedriver_autoinstaller.install() 
         chrome_options = Options()
         chrome_options.add_argument("--headless")
-        self.browser = webdriver.Chrome(chrome_options=chrome_options)
+        self.browser = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()),chrome_options=chrome_options)
 
     def get(self,url):
         self.browser.get(url)
