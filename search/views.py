@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from .forms import formResponse
-from ..summary.webscraper import WebpageScraper
+from .webscraper import WebpageScraper
 # Create your views here.
 
 
