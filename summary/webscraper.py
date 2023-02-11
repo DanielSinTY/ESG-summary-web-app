@@ -8,7 +8,7 @@ chrome_options.add_argument("--headless")
 
 class WebpageScraper():
     def __init__(self):
-        self.browser = webdriver.Chrome(ChromeDriverManager(path = r"..\Drivers").install(),chrome_options=chrome_options)
+        self.browser = webdriver.Chrome(ChromeDriverManager().install(),chrome_options=chrome_options)
 
     def get(self,url):
         self.browser.get(url)
