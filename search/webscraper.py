@@ -12,7 +12,9 @@ class WebpageScraper():
         # chromedriver_autoinstaller.install() 
         chrome_options = Options()
         chrome_options.add_argument("--headless")
-        self.browser = webdriver.Chrome(service=ChromeService(ChromeDriverManager(path=r'/tmp').install()),chrome_options=chrome_options)
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        self.browser = webdriver.Chrome(ChromeDriverManager(path=r'/tmp').install(),chrome_options=chrome_options)
 
     def get(self,url):
         self.browser.get(url)
