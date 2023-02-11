@@ -30,3 +30,9 @@ def search(request):
         form = formResponse()
 
     return render(request, 'home.html', {'form': form})
+
+from django.shortcuts import redirect
+
+def home_redirect(request):
+    response = redirect('/search/')
+    return response
