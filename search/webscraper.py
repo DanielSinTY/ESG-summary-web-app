@@ -9,7 +9,7 @@ import chromedriver_autoinstaller
 
 class WebpageScraper():
     def __init__(self):
-        chromedriver_autoinstaller.install() 
+        # chromedriver_autoinstaller.install() 
         chrome_options = Options()
         chrome_options.add_argument("--headless")
         self.browser = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()),chrome_options=chrome_options)
