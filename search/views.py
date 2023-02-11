@@ -23,8 +23,7 @@ def search(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            a=form.cleaned_data['your_name']
-            return render(request,'done.html',{'name':a})
+            return render(request,'done.html',{'name':form.cleaned_data['company_name']})
 
     # if a GET (or any other method) we'll create a blank form
     else:
