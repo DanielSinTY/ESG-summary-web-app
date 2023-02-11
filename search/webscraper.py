@@ -3,12 +3,15 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-chrome_options = Options()
-chrome_options.add_argument("--headless")
+import chromedriver_autoinstaller
+
 
 class WebpageScraper():
     def __init__(self):
-        self.browser = webdriver.Chrome(ChromeDriverManager().install(),chrome_options=chrome_options)
+        chromedriver_autoinstaller.install() 
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        self.browser = webdriver.Chrome(chrome_options=chrome_options)
 
     def get(self,url):
         self.browser.get(url)
