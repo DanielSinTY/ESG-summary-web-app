@@ -17,7 +17,7 @@ class WebpageScraper():
         # chrome_options.add_argument("--headless")
         # chrome_options.add_argument('--no-sandbox')
         # chrome_options.add_argument('--disable-dev-shm-usage')
-        self.browser = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+        self.browser = webdriver.Firefox(service=FirefoxService(GeckoDriverManager(path='/tmp').install()))
         # self.browser = webdriver.Chrome(ChromeDriverManager(path=r'/tmp').install(),chrome_options=chrome_options)
 
     def get(self,url):
