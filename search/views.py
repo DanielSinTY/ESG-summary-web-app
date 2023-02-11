@@ -1,11 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from .forms import formResponse
+from .webscraper import WebpageScraper
 # Create your views here.
-# from selenium import webdriver
-# from bs4 import BeautifulSoup
-# from webdriver_manager.chrome import ChromeDriverManager
-# from selenium.webdriver.chrome.options import Options
+
 
 # chrome_options = Options()
 # chrome_options.add_argument("--headless")
@@ -23,7 +21,10 @@ def search(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            return render(request,'done.html',{'name':form.cleaned_data['company_name']})
+            scraper=WebpageScraper()
+            scraper.get("https://www.google.com/search?q="+form.cleaned_data['company_name'].replace(' ','+')+"news")
+            
+            return render(request,'done.html',{'result':scraper.getFirstEntry()})
 
     # if a GET (or any other method) we'll create a blank form
     else:
