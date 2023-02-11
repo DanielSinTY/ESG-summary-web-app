@@ -11,6 +11,7 @@ from .webscraper import WebpageScraper
 # browser = webdriver.Chrome(ChromeDriverManager().install(),chrome_options=chrome_options)
 
 def search(request):
+    scraper=WebpageScraper()
     # return render(request,"home.html")
      # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -21,7 +22,7 @@ def search(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            scraper=WebpageScraper()
+            
             scraper.get("https://www.google.com/search?q="+form.cleaned_data['company_name'].replace(' ','+')+"news")
             
             return render(request,'done.html',{'result':scraper.getFirstEntry()})
