@@ -26,9 +26,7 @@ def install_chromedriver(version):
         subprocess.run(["rm", f"chromedriver_{os_type}64.zip"])
         os.environ["PATH"] += os.pathsep + os.getcwd()
 
-# specify the desired version of ChromeDriver
-version = "87.0.4280.20"
-install_chromedriver(version)
+
 
 
 
@@ -42,7 +40,9 @@ class WebpageScraper():
         # chrome_options.add_argument('--disable-dev-shm-usage')
         # self.browser = webdriver.Firefox(service=FirefoxService(GeckoDriverManager(path='/tmp').install()))
         # self.browser = webdriver.Chrome(ChromeDriverManager(path=r'/tmp').install(),chrome_options=chrome_options)
-        
+        # specify the desired version of ChromeDriver
+        version = "87.0.4280.20"
+        install_chromedriver(version)
 
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")
