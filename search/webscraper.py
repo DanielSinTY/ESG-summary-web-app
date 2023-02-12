@@ -14,17 +14,24 @@ import sys
 import subprocess
 import platform
 from selenium import webdriver
+import wget
 
 def install_chromedriver(version):
     os_type = platform.system().lower()
-    chromedriver_path = f"chromedriver_{os_type}64"
-    if not os.path.exists(chromedriver_path):
-        chromedriver_url = f"https://chromedriver.storage.googleapis.com/{version}/chromedriver_{os_type}64.zip"
-        subprocess.run(["wget", chromedriver_url])
+    system = platform.system()
+    if system == 'Windows':
+        url = 'https://chromedriver.storage.googleapis.com/87.0.4280.20/chromedriver_win32.zip'
+        filename = 'chromedriver_win32.zip'
+    elif system == 'Linux':
+        url = 'https://chromedriver.storage.googleapis.com/87.0.4280.20/chromedriver_linux64.zip'
+        filename = 'chromedriver_linux64.zip'
+
+    if not os.path.exists(filename):
+        
+        wget.download(url, filename)
         subprocess.run(["unzip", f"chromedriver_{os_type}64.zip"])
         subprocess.run(["rm", f"chromedriver_{os_type}64.zip"])
         os.environ["PATH"] += os.pathsep + os.getcwd()
-
 
 
 
@@ -45,7 +52,11 @@ class WebpageScraper():
 
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")
-        self.browser = webdriver.Chrome(executable_path=f"./chromedriver_{platform.system().lower()}64",options=options)
+        if platform.system().lower() == "windows":
+            self.browser = webdriver.Chrome(executable_path=f"./chromedriver.exe", options=options)
+        else:
+            self.browser = webdriver.Chrome(executable_path=f"./chromedriver_{platform.system().lower()}64", options=options)
+        # self.browser = webdriver.Chrome(executable_path=f"./chromedriver_{platform.system().lower()}64",options=options)
 
     def get(self,url):
         self.browser.get(url)
