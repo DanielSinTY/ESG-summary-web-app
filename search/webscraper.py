@@ -60,7 +60,7 @@ class WebpageScraper():
         if platform.system().lower() == "windows":
             self.browser = webdriver.Chrome(executable_path=f"./chromedriver.exe", options=options)
         else:
-            self.browser = webdriver.Chrome(executable_path=f"./tmp/chromedriver_{platform.system().lower()}64", options=options)
+            self.browser = webdriver.Chrome(executable_path=f"./chromedriver_{platform.system().lower()}64", options=options)
         # self.browser = webdriver.Chrome(executable_path=f"./chromedriver_{platform.system().lower()}64",options=options)
 
     def get(self,url):
