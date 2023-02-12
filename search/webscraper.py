@@ -17,7 +17,7 @@ from selenium import webdriver
 import wget
 import zipfile
 
-def install_chromedriver(version):
+def install_chromedriver():
     os_type = platform.system().lower()
     system = platform.system()
     if system == 'Windows':
@@ -37,7 +37,7 @@ def install_chromedriver(version):
 
 
 
-
+install_chromedriver()
 
 class WebpageScraper():
     def __init__(self):
@@ -49,15 +49,15 @@ class WebpageScraper():
         # self.browser = webdriver.Firefox(service=FirefoxService(GeckoDriverManager(path='/tmp').install()))
         # self.browser = webdriver.Chrome(ChromeDriverManager(path=r'/tmp').install(),chrome_options=chrome_options)
         # specify the desired version of ChromeDriver
-        version = "87.0.4280.20"
-        install_chromedriver(version)
+        
+       
 
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")
         if platform.system().lower() == "windows":
             self.browser = webdriver.Chrome(executable_path=f"./chromedriver.exe", options=options)
         else:
-            self.browser = webdriver.Chrome(executable_path=f"./chromedriver_{platform.system().lower()}64", options=options)
+            self.browser = webdriver.Chrome(executable_path=f"./tmp/chromedriver_{platform.system().lower()}64", options=options)
         # self.browser = webdriver.Chrome(executable_path=f"./chromedriver_{platform.system().lower()}64",options=options)
 
     def get(self,url):
