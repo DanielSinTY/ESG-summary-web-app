@@ -24,13 +24,13 @@ def install_chromedriver(version):
         filename = 'chromedriver_win32.zip'
     elif system == 'Linux':
         url = 'https://chromedriver.storage.googleapis.com/87.0.4280.20/chromedriver_linux64.zip'
-        filename = 'chromedriver_linux64.zip'
+        filename = '/tmp/chromedriver_linux64.zip'
 
     if not os.path.exists(filename):
         
         wget.download(url, filename)
-        subprocess.run(["unzip", f"chromedriver_{os_type}64.zip"])
-        subprocess.run(["rm", f"chromedriver_{os_type}64.zip"])
+        subprocess.run(["unzip", filename])
+        subprocess.run(["rm", filename])
         os.environ["PATH"] += os.pathsep + os.getcwd()
 
 
