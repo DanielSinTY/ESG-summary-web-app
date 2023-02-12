@@ -15,6 +15,7 @@ import subprocess
 import platform
 from selenium import webdriver
 import wget
+import zipfile
 
 def install_chromedriver(version):
     os_type = platform.system().lower()
@@ -29,8 +30,9 @@ def install_chromedriver(version):
     if not os.path.exists(filename):
         
         wget.download(url, filename)
-        subprocess.run(["unzip", filename])
-        subprocess.run(["rm", filename])
+        with zipfile.ZipFile(filename, 'r') as zip_ref:
+            zip_ref.extractall('/tmp')
+        os.remove(filename)
         os.environ["PATH"] += os.pathsep + os.getcwd()
 
 
