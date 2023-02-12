@@ -24,7 +24,7 @@ def install_chromedriver():
     if system == 'Windows':
         url = 'https://chromedriver.storage.googleapis.com/87.0.4280.20/chromedriver_win32.zip'
         filename = 'chromedriver_win32.zip'
-    elif system == 'Linux':
+    else :
         url = 'https://chromedriver.storage.googleapis.com/87.0.4280.20/chromedriver_linux64.zip'
         filename = '/tmp/chromedriver_linux64.zip'
 
