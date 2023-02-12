@@ -40,7 +40,7 @@ def install_chromedriver():
 
 
 
-install_chromedriver()
+
 
 class WebpageScraper():
     def __init__(self):
@@ -54,7 +54,7 @@ class WebpageScraper():
         # specify the desired version of ChromeDriver
         
        
-
+        install_chromedriver()
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")
         if platform.system().lower() == "windows":
