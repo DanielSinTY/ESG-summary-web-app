@@ -49,10 +49,10 @@ def install_chromedriver():
 class WebpageScraper():
     def __init__(self):
         # chromedriver_autoinstaller.install() 
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument('--no-sandbox')
-        chrome_options.add_argument('--disable-dev-shm-usage')
+        # chrome_options = Options()
+        # chrome_options.add_argument("--headless")
+        # chrome_options.add_argument('--no-sandbox')
+        # chrome_options.add_argument('--disable-dev-shm-usage')
         # self.browser = webdriver.Firefox(service=FirefoxService(GeckoDriverManager(path='/tmp').install()))
         # self.browser = webdriver.Chrome(ChromeDriverManager(path=r'/tmp').install(),chrome_options=chrome_options)
         # specify the desired version of ChromeDriver
@@ -67,17 +67,31 @@ class WebpageScraper():
         #     self.browser = webdriver.Chrome(executable_path=f"./chromedriver_{platform.system().lower()}64", options=options)
         # # self.browser = webdriver.Chrome(executable_path=f"./chromedriver_{platform.system().lower()}64",options=options)
         # Set the desired capabilities
-        capabilities = {
-            "browserName": "chrome",
-            "version": "87.0",
-            "platform": "ANY"
-        }
-        # Create a new instance of the Remote WebDriver
-        self.browser = webdriver.Remote(
+        # capabilities = {
+        #     "browserName": "chrome",
+        #     "version": "87.0",
+        #     "platform": "ANY"
+        # }
+        # # Create a new instance of the Remote WebDriver
+        # self.browser = webdriver.Remote(
             
-            command_executor=f'http://{config("YOUR_USERNAME")}:{config("YOUR_ACCESS_KEY")}@hub.browserstack.com:80/wd/hub',
-            desired_capabilities=capabilities,
-            options=chrome_options)
+        #     command_executor=f'http://{config("YOUR_USERNAME")}:{config("YOUR_ACCESS_KEY")}@hub.browserstack.com:80/wd/hub',
+        #     desired_capabilities=capabilities,
+        #     options=chrome_options)
+        options = webdriver.ChromeOptions()
+        options.add_argument('--disable-dev-shm-usage')
+        options.add_argument('--disable-extensions')
+        options.add_argument('--disable-gpu')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--headless')
+        options.add_argument('--remote-debugging-port=9222')
+        options.add_argument(f'--remote-debugging-address=0.0.0.0')
+        options.add_argument(f'--remote-debugging-port=0')
+
+        self.browser = webdriver.Remote(
+            command_executor=f'https://{config("BROWSERLESS_KEY")}@chrome.browserless.io/webdriver',
+            desired_capabilities=options.to_capabilities(),
+        )
 
     def get(self,url):
         self.browser.get(url)
