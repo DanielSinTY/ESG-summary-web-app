@@ -19,6 +19,7 @@ import platform
 from selenium import webdriver
 import wget
 import zipfile
+from decouple import config
 
 def install_chromedriver():
     logger.debug("Function started")
@@ -48,23 +49,35 @@ def install_chromedriver():
 class WebpageScraper():
     def __init__(self):
         # chromedriver_autoinstaller.install() 
-        # chrome_options = Options()
-        # chrome_options.add_argument("--headless")
-        # chrome_options.add_argument('--no-sandbox')
-        # chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
         # self.browser = webdriver.Firefox(service=FirefoxService(GeckoDriverManager(path='/tmp').install()))
         # self.browser = webdriver.Chrome(ChromeDriverManager(path=r'/tmp').install(),chrome_options=chrome_options)
         # specify the desired version of ChromeDriver
         
        
-        install_chromedriver()
-        options = webdriver.ChromeOptions()
-        options.add_argument("--headless")
-        if platform.system().lower() == "windows":
-            self.browser = webdriver.Chrome(executable_path=f"./chromedriver.exe", options=options)
-        else:
-            self.browser = webdriver.Chrome(executable_path=f"./chromedriver_{platform.system().lower()}64", options=options)
-        # self.browser = webdriver.Chrome(executable_path=f"./chromedriver_{platform.system().lower()}64",options=options)
+        # install_chromedriver()
+        # options = webdriver.ChromeOptions()
+        # options.add_argument("--headless")
+        # if platform.system().lower() == "windows":
+        #     self.browser = webdriver.Chrome(executable_path=f"./chromedriver.exe", options=options)
+        # else:
+        #     self.browser = webdriver.Chrome(executable_path=f"./chromedriver_{platform.system().lower()}64", options=options)
+        # # self.browser = webdriver.Chrome(executable_path=f"./chromedriver_{platform.system().lower()}64",options=options)
+        # Set the desired capabilities
+        capabilities = {
+            "browserName": "chrome",
+            "version": "87.0",
+            "platform": "ANY"
+        }
+        # Create a new instance of the Remote WebDriver
+        self.browser = webdriver.Remote(
+            
+            command_executor=f'http://{config("YOUR_USERNAME")}:{config("YOUR_ACCESS_KEY")}@hub.browserstack.com:80/wd/hub',
+            desired_capabilities=capabilities,
+            options=chrome_options)
 
     def get(self,url):
         self.browser.get(url)

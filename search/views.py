@@ -23,7 +23,7 @@ def search(request):
             # ...
             # redirect to a new URL:
             scraper=WebpageScraper()
-            scraper.get("https://www.google.com/search?q="+form.cleaned_data['company_name'].replace(' ','+')+"news")
+            scraper.get("https://www.google.com/search?q="+form.cleaned_data['company_name'].replace(' ','+')+"+ESG+news")
             
             return render(request,'done.html',{'result':scraper.getFirstEntry()})
 
