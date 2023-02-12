@@ -24,8 +24,9 @@ def search(request):
             # redirect to a new URL:
             scraper=WebpageScraper()
             scraper.get("https://www.google.com/search?q="+form.cleaned_data['company_name'].replace(' ','+')+"+ESG+news")
-            
-            return render(request,'done.html',{'result':scraper.getFirstEntry()})
+            result=scraper.getFirstEntry()
+            scraper.destroy()
+            return render(request,'done.html',{'result':result})
 
     # if a GET (or any other method) we'll create a blank form
     else:
