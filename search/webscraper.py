@@ -8,7 +8,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
 
-import chromedriver_autoinstaller
 # script.py
 import os
 import sys
