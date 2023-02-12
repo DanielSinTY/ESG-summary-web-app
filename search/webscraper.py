@@ -7,6 +7,9 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
+import logging
+
+logger = logging.getLogger(__name__)
 
 # script.py
 import os
@@ -18,7 +21,7 @@ import wget
 import zipfile
 
 def install_chromedriver():
-    print("Function started")
+    logger.debug("Function started")
     os_type = platform.system().lower()
     system = platform.system()
     if system == 'Windows':
@@ -34,9 +37,9 @@ def install_chromedriver():
         with zipfile.ZipFile(filename, 'r') as zip_ref:
             zip_ref.extractall('/tmp')
         os.remove(filename)
-        print(os.listdir('/tmp'))
+        logger.debug(os.listdir('/tmp'))
         os.environ["PATH"] += os.pathsep + '/tmp'
-        print(os.environ["PATH"])
+        logger.debug(os.environ["PATH"])
 
 
 

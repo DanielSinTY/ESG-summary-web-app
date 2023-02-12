@@ -29,7 +29,10 @@ SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG",cast=bool)
 
 ALLOWED_HOSTS = ['.vercel.app','127.0.0.1']
-
+LOGGING = {
+    'version': 1,                       # the dictConfig format version
+    'disable_existing_loggers': False,  # retain the default loggers
+}
 
 # Application definition
 
