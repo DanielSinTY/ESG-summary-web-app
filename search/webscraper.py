@@ -33,7 +33,7 @@ def install_chromedriver():
         with zipfile.ZipFile(filename, 'r') as zip_ref:
             zip_ref.extractall('/tmp')
         os.remove(filename)
-        os.environ["PATH"] += os.pathsep + os.getcwd()
+        os.environ["PATH"] += os.pathsep + '/tmp'
 
 
 
