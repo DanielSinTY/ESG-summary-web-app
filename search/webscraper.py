@@ -18,6 +18,7 @@ import wget
 import zipfile
 
 def install_chromedriver():
+    print("Function started")
     os_type = platform.system().lower()
     system = platform.system()
     if system == 'Windows':
