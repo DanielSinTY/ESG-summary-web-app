@@ -108,7 +108,8 @@ class WebpageScraper():
         # company=input("company?")
         # navigate to the MSCI ESG website
         self.browser.get("https://www.msci.com/our-solutions/esg-investing/esg-ratings-climate-search-tool/")
-        time.sleep(3)
+        while not self.browser.find_elements(By.XPATH,"//input[@id='_esgratingsprofile_keywords']"):
+            pass
         entrybox=self.browser.find_element(By.XPATH,"//input[@id='_esgratingsprofile_keywords']")
         entrybox.send_keys(companyName)
         time.sleep(3)
