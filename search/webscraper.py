@@ -103,4 +103,25 @@ class WebpageScraper():
     def destroy(self):
         self.browser.quit()
 
+    def scrapeMSCI(self,companyName):
+        company=input("company?")
+        # navigate to the MSCI ESG website
+        self.browser.get("https://www.msci.com/our-solutions/esg-investing/esg-ratings-climate-search-tool/")
+        entrybox=driver.find_element(By.XPATH,"//input[@id='_esgratingsprofile_keywords']")
+        entrybox.send_keys(company)
+        time.sleep(3)
+        related_companies=driver.find_element(By.XPATH,"//ul[@id='ui-id-1']").find_elements(By.CSS_SELECTOR,"li")
+        print(related_companies)
+        for i,com in enumerate(related_companies):
+            print(f"{i+1}. {com.text}")
+        index=int(input("Please input the number of the company you want to choose"))
+        related_companies[index-1].click()
+        time.sleep(3)
+        element=driver.find_element(By.XPATH,"//div[@id='_esgratingsprofile_esg-rating-history']")
+
+        svg=element.find_element(By.XPATH,"./div[@class='highcharts-container ']")
+        print(svg.get_attribute('innerHTML'))
+        # entrybox.send_keys(Keys.RETURN)
+        input()
+
 
