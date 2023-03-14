@@ -12,11 +12,9 @@ FRUIT_CHOICES= [
     ]
 
 class UserForm(forms.Form):
-    first_name= forms.CharField(max_length=100)
-    last_name= forms.CharField(max_length=100)
-    email= forms.EmailField()
-    age= forms.IntegerField()
-    favorite_fruit= forms.CharField(label='What is your favorite fruit?', widget=forms.Select(choices=FRUIT_CHOICES))
+
+    def __init__(self,CHOICES):
+        self.chosenCompany= forms.CharField(label='Choose a company', widget=forms.Select(choices=CHOICES))
 # Create your views here.
 
 
@@ -41,12 +39,13 @@ def search(request):
             # scraper.get("https://www.google.com/search?q="+form.cleaned_data['company_name'].replace(' ','+')+"+ESG+news")
             # result=scraper.getFirstEntry()
             result=scraper.scrapeMSCI(form.cleaned_data['company_name'])
+            form=UserForm([(i,comp) for i,comp in enumerate(result)])
             scraper.destroy()
-            return render(request,'done.html',{'result':result})
+            return render(request,'selectCompany.html',{'result':result})
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = UserForm()
+        form = formResponse()
 
     return render(request, 'home.html', {'form': form})
 
