@@ -21,5 +21,6 @@ from django.http import HttpResponse,HttpResponseRedirect
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('search/', include('search.urls')),
+    path('company/', include('search.urls')),
     path('', views.home_redirect)
 ]

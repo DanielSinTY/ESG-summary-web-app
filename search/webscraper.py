@@ -7,6 +7,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.common.keys import Keys
 import logging
 import time
 
@@ -84,7 +85,7 @@ class WebpageScraper():
         options.add_argument('--disable-extensions')
         options.add_argument('--disable-gpu')
         options.add_argument('--no-sandbox')
-        options.add_argument('--headless')
+        # options.add_argument('--headless')
         options.add_argument('--remote-debugging-port=9222')
         options.add_argument(f'--remote-debugging-address=0.0.0.0')
         options.add_argument(f'--remote-debugging-port=0')
@@ -107,25 +108,31 @@ class WebpageScraper():
     def scrapeMSCI(self,companyName):
         # company=input("company?")
         # navigate to the MSCI ESG website
+        self.company=companyName
         self.browser.get("https://www.msci.com/our-solutions/esg-investing/esg-ratings-climate-search-tool/")
         while not self.browser.find_elements(By.XPATH,"//input[@id='_esgratingsprofile_keywords']"):
             pass
         entrybox=self.browser.find_element(By.XPATH,"//input[@id='_esgratingsprofile_keywords']")
         entrybox.send_keys(companyName)
         time.sleep(3)
-        related_companies= self.browser.find_element(By.XPATH,"//ul[@id='ui-id-1']").find_elements(By.CSS_SELECTOR,"li")
-        return [i.text for i in related_companies]
-        # print(related_companies)
-        # for i,com in enumerate(related_companies):
-        #     print(f"{i+1}. {com.text}")
-        # index=int(input("Please input the number of the company you want to choose"))
-        # related_companies[index-1].click()
-        # time.sleep(3)
-        # element=driver.find_element(By.XPATH,"//div[@id='_esgratingsprofile_esg-rating-history']")
+        self.related_companies= self.browser.find_element(By.XPATH,"//ul[@id='ui-id-1']").find_elements(By.CSS_SELECTOR,"li")
+        
+        return [i.text for i in self.related_companies]
+    
+    def chooseCompany(self,index):
+        entrybox=self.browser.find_element(By.XPATH,"//input[@id='_esgratingsprofile_keywords']")
+        entrybox.clear()
+        entrybox.send_keys(self.related_companies[int(index)].text)
+        entrybox.send_keys(Keys.RETURN)
+        time.sleep(3)
+        element=self.browser.find_element(By.XPATH,"//ul[@id='ui-id-1']").find_element(By.CSS_SELECTOR,"li")
+        self.browser.execute_script("arguments[0].click();", element)
+        # related_companies[int(index)].click()
+        time.sleep(3)
+        element=self.browser.find_element(By.XPATH,"//div[@id='_esgratingsprofile_esg-rating-history']")
 
-        # svg=element.find_element(By.XPATH,"./div[@class='highcharts-container ']")
-        # print(svg.get_attribute('innerHTML'))
-        # # entrybox.send_keys(Keys.RETURN)
-        # input()
+        svg=element.find_element(By.XPATH,"./div[@class='highcharts-container ']")
+        return svg.get_attribute('innerHTML')
+
 
 
